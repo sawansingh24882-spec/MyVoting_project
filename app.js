@@ -21,12 +21,24 @@ app.use((req, res, next) => {
 });
 
 //Database connectivity
+// const con = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "1234",
+//     database: "mydb"
+// });
+
+// for hosting
+
+require("dotenv").config();
+
 const con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "1234",
-    database: "mydb"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
 });
+
 
 con.connect((err) => {
     if (err) throw err;
@@ -291,6 +303,11 @@ app.get('/result', (req, res) => {
     }
 })
 
-app.listen(5000, () => {
+// app.listen(5000, () => {
+//     console.log("server running");
+// })
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
     console.log("server running");
-})
+});
